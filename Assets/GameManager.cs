@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Steamworks.Data;
 using System;
 using Netcode.Transports.Facepunch;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class GameManager : NetworkBehaviour
@@ -34,6 +35,8 @@ public class GameManager : NetworkBehaviour
     private void Start()
     {
         SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
+        SteamMatchmaking.OnLobbyEntered += OnLobbyEntered;
+
         SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
         SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
 
@@ -144,6 +147,15 @@ public class GameManager : NetworkBehaviour
             LoadingScreenUI.SetActive(false);
         }
     }
+    void OnLobbyEntered(Lobby _lobby)
+    {
+        Debug.Log("test");
+        currentLobby = _lobby;
+        RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(GetMyFriendVariable());
+        RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(_lobby.Owner);
+        RoomPageUI.SetActive(true);
+        LoadingScreenUI.SetActive(false);
+    }
 
     void OnLobbyMemberJoined(Lobby _lobby, Friend _player)
     {
@@ -164,5 +176,20 @@ public class GameManager : NetworkBehaviour
     {
         HomePageUI.SetActive(false);
         joinRoomsPageUI.SetActive(true);
+    }
+
+    public Friend? GetMyFriendVariable()
+    {
+        if (currentLobby.HasValue)
+        {
+            foreach (var member in currentLobby.Value.Members)
+            {
+                if (member.Id == SteamClient.SteamId)
+                {
+                    return member;
+                }
+            }
+        }
+        return null;
     }
 }
