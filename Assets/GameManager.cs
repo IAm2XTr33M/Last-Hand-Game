@@ -149,12 +149,14 @@ public class GameManager : NetworkBehaviour
     }
     void OnLobbyEntered(Lobby _lobby)
     {
-        Debug.Log("test");
-        currentLobby = _lobby;
-        RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(GetMyFriendVariable());
-        RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(_lobby.Owner);
-        RoomPageUI.SetActive(true);
-        LoadingScreenUI.SetActive(false);
+        if (!IsHost)
+        {
+            currentLobby = _lobby;
+            RoomPageUI.SetActive(true);
+            LoadingScreenUI.SetActive(false);
+            RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(GetMyFriendVariable());
+            RoomPageUI.GetComponent<RoomController>().SetPlayerOneInfo(_lobby.Owner);
+        }
     }
 
     void OnLobbyMemberJoined(Lobby _lobby, Friend _player)
