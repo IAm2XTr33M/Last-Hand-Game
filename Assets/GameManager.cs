@@ -157,14 +157,21 @@ public class GameManager : NetworkBehaviour
             joinRoomsPageUI.SetActive(false);
             RoomPageUI.SetActive(true);
             Friend? test = GetMyFriendVariable();
-            Debug.Log(test);
-            RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(test);
+            if (test.HasValue)
+            {
+                RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(test.Value);
+            }
+            else
+            {
+                RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(null);
+            }
             RoomPageUI.GetComponent<RoomController>().SetPlayerOneInfo(_lobby.Owner);
         }
     }
 
     void OnLobbyMemberJoined(Lobby _lobby, Friend _player)
     {
+        Debug.Log(_player);
         RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(_player);
     }
     
