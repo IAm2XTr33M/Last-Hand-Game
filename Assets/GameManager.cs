@@ -159,4 +159,10 @@ public class GameManager : NetworkBehaviour
     {
 
     }
+
+    public void ShowLobbies()
+    {
+        HomePageUI.SetActive(false);
+        joinRoomsPageUI.SetActive(true);
+    }
 }
