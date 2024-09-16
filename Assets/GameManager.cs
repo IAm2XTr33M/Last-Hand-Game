@@ -41,7 +41,7 @@ public class GameManager : NetworkBehaviour
         SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
 
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        //NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
 
@@ -184,6 +184,11 @@ public class GameManager : NetworkBehaviour
     {
 
     }
+    void OnClientDisconnected(ulong _client)
+    {
+
+    }
+
 
     public void ShowLobbies()
     {
@@ -204,5 +209,14 @@ public class GameManager : NetworkBehaviour
             }
         }
         return null;
+    }
+
+    private void OnApplicationQuit()
+    {
+        NetworkManager.Singleton.DisconnectClient(NetworkManager.LocalClientId);
+        if (currentLobby.HasValue)
+        {
+            currentLobby.Value.Leave();
+        }
     }
 }
