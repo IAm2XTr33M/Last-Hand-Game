@@ -31,4 +31,9 @@ public class RoomCardScript : MonoBehaviour
         trans.localScale = new Vector3(1, 1, 1);
         trans.localPosition = new Vector3(pos.x, pos.y, 0); 
     }
+
+    public void JoinLobby()
+    {
+        GameManager.instance.JoinPublicRoom(roomLobby);
+    }
 }
