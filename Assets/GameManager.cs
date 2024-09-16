@@ -35,7 +35,7 @@ public class GameManager : NetworkBehaviour
     {
         SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
         SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
-        //SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
+        SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
 
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         //NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
@@ -148,6 +148,11 @@ public class GameManager : NetworkBehaviour
     void OnLobbyMemberJoined(Lobby _lobby, Friend _player)
     {
         RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(_player);
+    }
+    
+    void OnLobbyMemberLeft(Lobby _lobby, Friend _player)
+    {
+        RoomPageUI.GetComponent<RoomController>().SetPlayerTwoInfo(null);
     }
 
     void OnClientConnected(ulong _client)

@@ -19,20 +19,38 @@ public class RoomController : MonoBehaviour
     public TextMeshProUGUI playerTwoName;
     Friend playerTwo;
 
-    public async void SetPlayerOneInfo(Friend _player)
+    public Texture2D PlayerPlaceholderTexture;
+
+    public async void SetPlayerOneInfo(Friend? _player)
     {
-        playerOne = _player;
-        playerOneName.text = playerOne.Name;
+        if (_player.HasValue)
+        {
+            playerOne = _player.Value;
+            playerOneName.text = playerOne.Name;
 
-        playerOneImage.texture = await GetUserProfilePicture((ulong)playerOne.Id);
-
+            playerOneImage.texture = await GetUserProfilePicture((ulong)playerOne.Id);
+        }
     }
 
-    public async void SetPlayerTwoInfo(Friend _player)
+    private void Start()
     {
-        playerTwo = _player;
-        playerTwoName.text = playerTwo.Name;
-        playerTwoImage.texture = await GetUserProfilePicture((ulong)playerTwo.Id);
+        playerTwoName.text = "Waiting for player";
+        playerTwoImage.texture = PlayerPlaceholderTexture;
+    }
+
+    public async void SetPlayerTwoInfo(Friend? _player)
+    {
+        if (_player.HasValue)
+        {
+            playerTwo = _player.Value;
+            playerTwoName.text = playerTwo.Name;
+            playerTwoImage.texture = await GetUserProfilePicture((ulong)playerTwo.Id);
+        }
+        else
+        {
+            playerTwoName.text = "Waiting for player";
+            playerTwoImage.texture = PlayerPlaceholderTexture;
+        }
     }
 
     public async Task<Texture2D> GetUserProfilePicture(ulong _SteamId)

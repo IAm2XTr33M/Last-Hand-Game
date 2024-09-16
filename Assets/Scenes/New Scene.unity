@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4614.1626, g: 2948.932, b: 2171.1526, a: 1}
+  m_IndirectSpecularColor: {r: 4614.1313, g: 2948.924, b: 2171.137, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3150,6 +3150,8 @@ MonoBehaviour:
   playerOneName: {fileID: 761297369}
   playerTwoImage: {fileID: 1063322995}
   playerTwoName: {fileID: 301709334}
+  PlayerPlaceholderTexture: {fileID: 2800000, guid: 79f86b69b302466429e0c0293c64a3fe,
+    type: 3}
 --- !u!1 &1615486104
 GameObject:
   m_ObjectHideFlags: 0
